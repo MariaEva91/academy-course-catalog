@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Academy — Course Catalog</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-mark">A</span>
+        <span class="logo-text">Academy</span>
+      </div>
+      <p class="header-tagline">Expand your expertise. Learn at your pace.</p>
+    </div>
+    <div class="header-decoration" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+
+  <main class="main-content">
+
+    <section class="filters-bar" id="filters">
+      <div class="filters-inner">
+        <div class="filter-group">
+          <label for="filter-category" class="filter-label">Category</label>
+          <div class="select-wrap">
+            <select id="filter-category" class="filter-select">
+              <option value="">All Categories</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-group">
+          <label for="filter-audience" class="filter-label">Audience</label>
+          <div class="select-wrap">
+            <select id="filter-audience" class="filter-select">
+              <option value="">All Audiences</option>
+            </select>
+          </div>
+        </div>
+        <div class="filter-count-wrap">
+          <span class="filter-count" id="course-count">— courses</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="catalog-section">
+      <div class="catalog-grid" id="catalog-grid">
+        <!-- Cards injected here -->
+      </div>
+      <div class="empty-state hidden" id="empty-state">
+        <div class="empty-icon">🔍</div>
+        <p>No courses match your filters.</p>
+        <button id="reset-filters">Clear filters</button>
+      </div>
+      <div class="loading-state" id="loading-state">
+        <div class="spinner"></div>
+        <p>Loading courses…</p>
+      </div>
+      <div class="error-state hidden" id="error-state">
+        <div class="error-icon">⚠️</div>
+        <p id="error-message">Something went wrong loading the catalog.</p>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Academy. All rights reserved.</p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
