@@ -225,6 +225,14 @@ function buildCard(course) {
   desc.textContent = course['Description'] || 'No description available.';
 
   body.appendChild(title);
+  // ADD this block right before: body.appendChild(title);
+  const hasLink = course['Link'] && course['Link'].trim() !== '';
+if (!hasLink) {
+  const badge = document.createElement('span');
+  badge.className = 'coming-soon-badge';
+  badge.textContent = 'Próximamente';
+  body.appendChild(badge);
+}
   if (meta.children.length) body.appendChild(meta);
   body.appendChild(desc);
 
@@ -232,13 +240,27 @@ function buildCard(course) {
   const footer = document.createElement('div');
   footer.className = 'card-footer';
 
-  const btn = document.createElement('a');
-  btn.className = 'btn-view';
-  btn.textContent = 'View course';
-  btn.href = course['Link'] || '#';
+ // BEFORE
+const btn = document.createElement('a');
+btn.className = 'btn-view';
+btn.textContent = 'View course';
+btn.href = course['Link'] || '#';
+btn.target = '_blank';
+btn.rel = 'noopener noreferrer';
+if (!course['Link']) btn.setAttribute('aria-disabled', 'true');
+
+// AFTER
+
+btn.className = 'btn-view' + (hasLink ? '' : ' btn-disabled');
+btn.textContent = 'View course';
+btn.href = hasLink ? course['Link'] : '#';
+if (hasLink) {
   btn.target = '_blank';
   btn.rel = 'noopener noreferrer';
-  if (!course['Link']) btn.setAttribute('aria-disabled', 'true');
+} else {
+  btn.setAttribute('aria-disabled', 'true');
+  btn.addEventListener('click', e => e.preventDefault());
+}
 
   // Arrow icon
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');

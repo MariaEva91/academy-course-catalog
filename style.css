@@ -386,6 +386,30 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
 }
 .btn-view:hover svg { transform: translateX(3px); }
 
+/* ─── Coming Soon ────────────────────────────────────────── */
+.coming-soon-badge {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 3px 9px;
+  border-radius: 4px;
+  margin-bottom: 2px;
+}
+
+.btn-view.btn-disabled {
+  background: var(--border);
+  color: var(--text-muted);
+  pointer-events: none;
+  box-shadow: none;
+  cursor: default;
+  opacity: 0.6;
+}
+
 /* ─── States ─────────────────────────────────────────────── */
 .hidden { display: none !important; }
 
