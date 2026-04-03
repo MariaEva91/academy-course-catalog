@@ -10,7 +10,7 @@ const CSV_URL =
 
 // ─── Configuración WhatsApp ───────────────────────────────
 // Reemplazá con el número real (código de país sin + ni espacios)
-const WHATSAPP_NUMBER = '5491152604962';
+const WHATSAPP_NUMBER = '5491100000000';
 
 document.getElementById('year').textContent = new Date().getFullYear();
 
@@ -81,11 +81,11 @@ function renderDetail(course) {
   const waBtn = document.getElementById('detail-whatsapp');
   waBtn.href = waUrl;
 
-  // Secciones derivadas de la descripción
+  // Secciones: Sheet si hay datos, fallback a derivación desde descripción
   const desc = course['Description'] || '';
-  renderBullets('detail-learn',    generateLearn(desc, course));
-  renderBullets('detail-for',      generateFor(desc, course));
-  renderBullets('detail-outcomes', generateOutcomes(desc, course));
+  renderBullets('detail-learn',    fromSheet(course['Learn'])    || generateLearn(desc, course));
+  renderBullets('detail-for',      fromSheet(course['ForWho'])   || generateFor(desc, course));
+  renderBullets('detail-outcomes', fromSheet(course['Outcomes']) || generateOutcomes(desc, course));
 
   // Show card, hide loading
   document.getElementById('loading-state').classList.add('hidden');
@@ -168,6 +168,19 @@ function makePill(icon, text) {
 // ─── Secciones derivadas ──────────────────────────────────
 // Transformación simple de la descripción existente.
 // No usa IA: extrae frases, las reformula como bullets orientados al estudiante.
+
+// ─── Secciones de detalle ─────────────────────────────────
+
+/**
+ * Parsea una celda del Sheet separada por ";".
+ * Devuelve un array de strings, o null si la celda está vacía/ausente.
+ * null activa el fallback al generador desde descripción.
+ */
+function fromSheet(cellValue) {
+  if (!cellValue || !cellValue.trim()) return null;
+  const items = cellValue.split(';').map(s => s.trim()).filter(Boolean);
+  return items.length > 0 ? items : null;
+}
 
 function renderBullets(id, items) {
   const ul = document.getElementById(id);
