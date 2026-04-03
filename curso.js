@@ -8,6 +8,10 @@
 const CSV_URL =
   'https://docs.google.com/spreadsheets/d/1-vmZvDofUCJmafpypyUTJdgr0KLg55b5LUEucVIda5Q/export?format=csv';
 
+// ─── Configuración WhatsApp ───────────────────────────────
+// Reemplazá con el número real (código de país sin + ni espacios)
+const WHATSAPP_NUMBER = '5491152604962';
+
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // ─── Get slug from URL ────────────────────────────────────
@@ -70,6 +74,12 @@ function renderDetail(course) {
   } else {
     cta.style.display = 'none';
   }
+
+  // WhatsApp button
+  const waMessage = `Hola! Me interesa el curso "${course['Title']}". ¿Me podés contar más?`;
+  const waUrl = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(waMessage)}`;
+  const waBtn = document.getElementById('detail-whatsapp');
+  waBtn.href = waUrl;
 
   // Show card, hide loading
   document.getElementById('loading-state').classList.add('hidden');

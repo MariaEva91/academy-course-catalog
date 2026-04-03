@@ -559,3 +559,35 @@ button { cursor: pointer; font-family: inherit; border: none; background: none; 
   .detail-title { font-size: 1.45rem; }
   .detail-image { height: 220px; }
 }
+
+/* ─── WhatsApp Button ─────────────────────────────────────
+   Agregado para la página de detalle. No modifica estilos existentes.
+   ──────────────────────────────────────────────────────── */
+.btn-whatsapp {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  align-self: flex-start;
+  background: #25d366;
+  color: #fff;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 13px 28px;
+  border-radius: var(--radius-sm);
+  transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+  text-decoration: none;
+}
+.btn-whatsapp:hover {
+  background: #1ebe5d;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(37, 211, 102, 0.35);
+}
+.btn-whatsapp:active { transform: translateY(0); }
+.btn-whatsapp svg {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
