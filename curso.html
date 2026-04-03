@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detalle del curso — Academy</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-mark">A</span>
+        <span class="logo-text">Academy</span>
+      </div>
+      <p class="header-tagline">Expand your expertise. Learn at your pace.</p>
+    </div>
+    <div class="header-decoration" aria-hidden="true">
+      <span></span><span></span><span></span>
+    </div>
+  </header>
+
+  <main class="main-content">
+    <div class="detail-wrapper">
+
+      <!-- Loading -->
+      <div class="loading-state" id="loading-state">
+        <div class="spinner"></div>
+        <p>Cargando curso…</p>
+      </div>
+
+      <!-- Error -->
+      <div class="error-state hidden" id="error-state">
+        <div class="error-icon">⚠️</div>
+        <p id="error-message">No se encontró el curso.</p>
+        <a href="index.html" class="btn-back">← Volver al catálogo</a>
+      </div>
+
+      <!-- Detail content -->
+      <article class="detail-card hidden" id="detail-card">
+
+        <a href="index.html" class="btn-back">← Volver al catálogo</a>
+
+        <div class="detail-image-wrap" id="detail-image-wrap"></div>
+
+        <div class="detail-body">
+          <span class="detail-category" id="detail-category"></span>
+          <h1 class="detail-title" id="detail-title"></h1>
+
+          <div class="card-meta detail-meta" id="detail-meta"></div>
+
+          <hr class="detail-divider" />
+
+          <p class="detail-description" id="detail-description"></p>
+
+          <a class="btn-view detail-cta" id="detail-cta" target="_blank" rel="noopener noreferrer">
+            Ir al curso
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <line x1="5" y1="12" x2="19" y2="12"/>
+              <polyline points="12 5 19 12 12 19"/>
+            </svg>
+          </a>
+        </div>
+
+      </article>
+
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <p>© <span id="year"></span> Academy. All rights reserved.</p>
+  </footer>
+
+  <script src="curso.js"></script>
+</body>
+</html>

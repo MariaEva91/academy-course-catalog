@@ -3,7 +3,7 @@
    ============================================================ */
 
 const CSV_URL =
-'https://docs.google.com/spreadsheets/d/1-vmZvDofUCJmafpypyUTJdgr0KLg55b5LUEucVIda5Q/export?format=csv';
+  'https://docs.google.com/spreadsheets/d/1-vmZvDofUCJmafpypyUTJdgr0KLg55b5LUEucVIda5Q/export?format=csv';
 
 // ─── State ────────────────────────────────────────────────
 let allCourses = [];
@@ -225,14 +225,6 @@ function buildCard(course) {
   desc.textContent = course['Description'] || 'No description available.';
 
   body.appendChild(title);
-  // ADD this block right before: body.appendChild(title);
-  const hasLink = course['Link'] && course['Link'].trim() !== '';
-if (!hasLink) {
-  const badge = document.createElement('span');
-  badge.className = 'coming-soon-badge';
-  badge.textContent = 'Próximamente';
-  body.appendChild(badge);
-}
   if (meta.children.length) body.appendChild(meta);
   body.appendChild(desc);
 
@@ -240,27 +232,10 @@ if (!hasLink) {
   const footer = document.createElement('div');
   footer.className = 'card-footer';
 
- // BEFORE
-const btn = document.createElement('a');
-btn.className = 'btn-view';
-btn.textContent = 'View course';
-btn.href = course['Link'] || '#';
-btn.target = '_blank';
-btn.rel = 'noopener noreferrer';
-if (!course['Link']) btn.setAttribute('aria-disabled', 'true');
-
-// AFTER
-
-btn.className = 'btn-view' + (hasLink ? '' : ' btn-disabled');
-btn.textContent = 'View course';
-btn.href = hasLink ? course['Link'] : '#';
-if (hasLink) {
-  btn.target = '_blank';
-  btn.rel = 'noopener noreferrer';
-} else {
-  btn.setAttribute('aria-disabled', 'true');
-  btn.addEventListener('click', e => e.preventDefault());
-}
+  const btn = document.createElement('a');
+  btn.className = 'btn-view';
+  btn.textContent = 'Ver detalle';
+  btn.href = `curso.html?id=${toSlug(course['Title'])}`;
 
   // Arrow icon
   const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -313,6 +288,15 @@ function showError(msg) {
 }
 
 // ─── Utility ──────────────────────────────────────────────
+function toSlug(str) {
+  return String(str)
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // remove accents
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-');
+}
+
 function escapeHTML(str) {
   return String(str)
     .replace(/&/g, '&amp;')
