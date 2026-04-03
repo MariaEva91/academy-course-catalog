@@ -31,14 +31,14 @@ yearSpan.textContent = new Date().getFullYear();
     populateFilters(allCourses);
     renderCourses(allCourses);
   } catch (err) {
-    showError(err.message || 'Could not load course data. Please try again later.');
+    showError(err.message || 'No se pudieron cargar los cursos. Intentá de nuevo más tarde.');
   }
 })();
 
 // ─── CSV Fetching ──────────────────────────────────────────
 async function fetchCSV(url) {
   const res = await fetch(url);
-  if (!res.ok) throw new Error(`Network error: ${res.status} ${res.statusText}`);
+  if (!res.ok) throw new Error(`Error de red: ${res.status} ${res.statusText}`);
   return res.text();
 }
 
@@ -160,12 +160,12 @@ function renderCourses(courses) {
 
   if (courses.length === 0) {
     emptyState.classList.remove('hidden');
-    courseCount.textContent = '0 courses';
+    courseCount.textContent = '0 formaciones';
     return;
   }
 
   emptyState.classList.add('hidden');
-  courseCount.textContent = `${courses.length} course${courses.length !== 1 ? 's' : ''}`;
+  courseCount.textContent = `${courses.length} formación${courses.length !== 1 ? 'es' : ''}`;
 
   const fragment = document.createDocumentFragment();
   courses.forEach(course => {

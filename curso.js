@@ -81,6 +81,12 @@ function renderDetail(course) {
   const waBtn = document.getElementById('detail-whatsapp');
   waBtn.href = waUrl;
 
+  // Secciones derivadas de la descripción
+  const desc = course['Description'] || '';
+  renderBullets('detail-learn',    generateLearn(desc, course));
+  renderBullets('detail-for',      generateFor(desc, course));
+  renderBullets('detail-outcomes', generateOutcomes(desc, course));
+
   // Show card, hide loading
   document.getElementById('loading-state').classList.add('hidden');
   document.getElementById('detail-card').classList.remove('hidden');
@@ -157,4 +163,78 @@ function makePill(icon, text) {
   pill.appendChild(ico);
   pill.appendChild(document.createTextNode(text));
   return pill;
+}
+
+// ─── Secciones derivadas ──────────────────────────────────
+// Transformación simple de la descripción existente.
+// No usa IA: extrae frases, las reformula como bullets orientados al estudiante.
+
+function renderBullets(id, items) {
+  const ul = document.getElementById(id);
+  items.forEach(text => {
+    const li = document.createElement('li');
+    li.className = 'detail-bullet';
+    li.textContent = text;
+    ul.appendChild(li);
+  });
+}
+
+/**
+ * Divide la descripción en oraciones y toma las primeras N como puntos de aprendizaje.
+ * Fallback a bullets genéricos basados en categoría/audiencia si la desc es muy corta.
+ */
+function getSentences(desc) {
+  return desc
+    .split(/(?<=[.!?])\s+/)
+    .map(s => s.trim())
+    .filter(s => s.length > 20);
+}
+
+function generateLearn(desc, course) {
+  const sentences = getSentences(desc);
+  if (sentences.length >= 3) {
+    return sentences.slice(0, Math.min(5, sentences.length)).map(capitalizeFirst);
+  }
+  // Fallback genérico
+  const cat = course['Category'] || 'esta área';
+  return [
+    `Los conceptos fundamentales de ${cat}.`,
+    `Las herramientas y metodologías más usadas en la industria.`,
+    `Cómo aplicar lo aprendido en proyectos reales.`,
+    `Buenas prácticas y estándares actuales del campo.`,
+  ];
+}
+
+function generateFor(desc, course) {
+  const audience = course['Audience'] || '';
+  const cat = course['Category'] || 'este campo';
+  const base = [
+    `Querés dar tus primeros pasos en ${cat}.`,
+    `Buscás actualizar tus conocimientos con un enfoque práctico.`,
+    `Necesitás una formación estructurada y clara.`,
+  ];
+  if (audience && audience.toLowerCase() !== 'todos') {
+    base.unshift(`Sos ${audience} y querés profundizar tus habilidades.`);
+    return base.slice(0, 4);
+  }
+  return base;
+}
+
+function generateOutcomes(desc, course) {
+  const sentences = getSentences(desc);
+  const cat = course['Category'] || 'tu área';
+  if (sentences.length >= 2) {
+    // Tomar las últimas oraciones como resultados (suelen ser las más orientadas a logros)
+    const last = sentences.slice(-3).map(s => `Aplicar: ${s.toLowerCase()}`).map(capitalizeFirst);
+    return last.slice(0, 3);
+  }
+  return [
+    `Resolver problemas concretos de ${cat} con confianza.`,
+    `Presentar tu trabajo y resultados de forma profesional.`,
+    `Continuar aprendiendo de forma autónoma en esta área.`,
+  ];
+}
+
+function capitalizeFirst(str) {
+  return str.charAt(0).toUpperCase() + str.slice(1);
 }
